@@ -25,8 +25,17 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface {
 
         foreach ($attributes as $attribute) {
 
-            if (empty($this->data[$attribute])) {
-                throw new \Frootbox\Exceptions\InputMissing('Parameter "' . get_class($this). '->' . $attribute . '" is missing.');
+            $sections = explode('.', $attribute);
+
+            $data = $this->data;
+
+            foreach ($sections as $segment) {
+
+                if (empty($data[$segment])) {
+                    throw new \Frootbox\Exceptions\InputMissing('Parameter "' . get_class($this). '->' . $attribute . '" is missing.');
+                }
+
+                $data = $data[$segment];
             }
         }
 
