@@ -21,6 +21,15 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface {
     /**
      *
      */
+    public function getData ( ) {
+
+        return $this->data;
+    }
+
+
+    /**
+     *
+     */
     public function validate (  array $attributes ): AbstractHttpData {
 
         foreach ($attributes as $attribute) {
