@@ -50,4 +50,30 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface {
 
         return $this;
     }
+
+
+    /**
+     *
+     */
+    public function requireOne ( array $attributes ): AbstractHttpData
+    {
+
+        foreach ($attributes as $attribute) {
+
+            $sections = explode('.', $attribute);
+
+            $data = $this->data;
+
+            foreach ($sections as $segment) {
+
+                if (!empty($data[$segment])) {
+                    return $this;
+                }
+
+                $data = $data[$segment];
+            }
+        }
+
+        throw new \Frootbox\Exceptions\InputMissing('Parameter "' . get_class($this). '->' . $attribute . '" is missing.');
+    }
 }
