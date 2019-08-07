@@ -30,7 +30,8 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface {
     /**
      *
      */
-    public function validate (  array $attributes ): AbstractHttpData {
+    public function require (  array $attributes ): AbstractHttpData
+    {
 
         foreach ($attributes as $attribute) {
 
@@ -75,5 +76,14 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface {
         }
 
         throw new \Frootbox\Exceptions\InputMissing('Parameter "' . get_class($this). '->' . $attribute . '" is missing.');
+    }
+
+
+    /**
+     * @deprecated
+     */
+    public function validate (  array $attributes ): AbstractHttpData {
+
+        return $this->require($attributes);
     }
 }

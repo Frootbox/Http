@@ -8,8 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Method AbstractHttpData->require()
 - Method AbstractHttpData->requireOne()
 - Method AbstractHttpData->getData()
+
+### Deprecated
+
+- Method AbstractHttpData->validate()
 
 ## 0.0.3
 
