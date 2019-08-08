@@ -10,11 +10,23 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface {
     protected $data;
 
     /**
-     *
+     * Get value of post/get/xxx variable
      */
     public function get ( $attribute ) {
 
-        return !empty($this->data[$attribute]) ? $this->data[$attribute] : null;
+        // Return null if attribute does not exist
+        if (!array_key_exists($attribute, $this->data)) {
+            return null;
+        }
+
+
+        // Trim whitespaces off value if it is a string
+        if (is_string($this->data[$attribute])) {
+            return trim($this->data[$attribute]);
+        }
+
+
+        return $this->data[$attribute];
     }
 
 
