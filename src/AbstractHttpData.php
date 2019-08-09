@@ -93,6 +93,7 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface {
 
     /**
      * @deprecated
+     * @see \Frootbox\Http\AbstractHttpData::require()
      */
     public function validate (  array $attributes ): AbstractHttpData {
 
