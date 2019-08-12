@@ -8,17 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Method AbstractHttpData->require()
-- Method AbstractHttpData->requireOne()
-- Method AbstractHttpData->getData()
+- Method AbstractHttpData::getWithDefault()
+- Method AbstractHttpData::require()
+- Method AbstractHttpData::requireOne()
+- Method AbstractHttpData::getData()
 
 ### Deprecated
 
-- Method AbstractHttpData->validate()
+- Method AbstractHttpData::validate()
 
 ### Changed
 
-- Method AbstractHttpData->get() trims now whitespaces
+- Method AbstractHttpData::get() trims now whitespaces
 
 ## 0.0.3
 

@@ -33,6 +33,21 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface {
     /**
      *
      */
+    public function getWithDefault ( $attribute, $default )
+    {
+
+        // Return default if attribute does not exist
+        if (empty($this->data[$attribute])) {
+            return $default;
+        }
+
+        return $this->get($attribute);
+    }
+
+
+    /**
+     *
+     */
     public function getData ( ) {
 
         return $this->data;
