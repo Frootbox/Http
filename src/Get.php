@@ -5,27 +5,16 @@
 
 namespace Frootbox\Http;
 
-class Get {
-    
-    protected $data;
-    
+class Get extends AbstractHttpData {
+
     /**
      * 
      */
-    public function __construct ( ) {
-        
+    public function __construct ( )
+    {
         $this->data = $_GET;
     }    
     
-    
-    /**
-     *
-     */
-    public function get ( $attribute ) {
-    
-        return !empty($this->data[$attribute]) ? $this->data[$attribute] : null;
-    }
-
 
     /**
      *
