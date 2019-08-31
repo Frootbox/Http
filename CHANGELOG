@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Method AbstractHttpData::get() trims now whitespaces
 - Extend Http\Get from AbstractHttpData
+- Method Traits\UrlSanitize::getStringUrlSanitized() accepts null as first parameter
 
 ## 0.0.3
 

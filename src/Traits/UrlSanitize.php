@@ -10,7 +10,11 @@ trait UrlSanitize {
     /**
      *
      */
-    public function getStringUrlSanitized ( string $string ): string {
+    public function getStringUrlSanitized ( string $string = null ): string
+    {
+        if (empty($string)) {
+            return (string) null;
+        }
 
         $string = mb_strtolower($string);
 
