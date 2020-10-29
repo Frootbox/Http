@@ -8,13 +8,12 @@ namespace Frootbox\Http;
 /**
  * 
  */
-class Response implements Interfaces\ResponseInterface {
-    
+class Response
+{
     protected $statusCode;
     protected $statusReasonPhrase;
     protected $body;
     protected $headers = [ ];
-
 
     /**
      * Flush response to output
@@ -118,7 +117,7 @@ class Response implements Interfaces\ResponseInterface {
     /**
      * 
      */
-    public function withHeader ( $name, $value ) {
+    public function setHeader ( $name, $value ) {
 
         $this->headers[] = [
             'name' => $name,
@@ -174,5 +173,4 @@ class Response implements Interfaces\ResponseInterface {
     public function withoutHeader ( $name ) {
         
     }
-    
 }

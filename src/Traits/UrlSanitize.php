@@ -109,7 +109,7 @@ trait UrlSanitize {
             return (string) null;
         }
 
-        if ($string{0} == '-') {
+        if ($string[0] == '-') {
             $string	=	substr($string, 1);
         }
 

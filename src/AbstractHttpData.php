@@ -5,30 +5,27 @@
 
 namespace Frootbox\Http;
 
-abstract class AbstractHttpData implements Interfaces\HttpDataInterface {
-
+abstract class AbstractHttpData implements Interfaces\HttpDataInterface
+{
     protected $data;
 
     /**
      * Get value of post/get/xxx variable
      */
-    public function get ( $attribute ) {
-
+    public function get($attribute)
+    {
         // Return null if attribute does not exist
         if (!array_key_exists($attribute, $this->data)) {
             return null;
         }
-
 
         // Trim whitespaces off value if it is a string
         if (is_string($this->data[$attribute])) {
             return trim($this->data[$attribute]);
         }
 
-
         return $this->data[$attribute];
     }
-
 
     /**
      *
@@ -44,22 +41,19 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface {
         return $this->get($attribute);
     }
 
-
     /**
      *
      */
-    public function getData ( ) {
-
+    public function getData(): array
+    {
         return $this->data;
     }
 
-
     /**
      *
      */
-    public function require (  array $attributes ): AbstractHttpData
+    public function require(array $attributes): AbstractHttpData
     {
-
         foreach ($attributes as $attribute) {
 
             $sections = explode('.', $attribute);
@@ -83,7 +77,9 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface {
     /**
      *
      */
-    public function requireOne ( array $attributes ): AbstractHttpData
+    public function requireOne(
+        array $attributes
+    ): AbstractHttpData
     {
 
         foreach ($attributes as $attribute) {
@@ -105,13 +101,12 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface {
         throw new \Frootbox\Exceptions\InputMissing('Parameter "' . get_class($this). '->' . $attribute . '" is missing.');
     }
 
-
     /**
      * @deprecated
      * @see \Frootbox\Http\AbstractHttpData::require()
      */
-    public function validate (  array $attributes ): AbstractHttpData {
-
+    public function validate( array $attributes): AbstractHttpData
+    {
         return $this->require($attributes);
     }
 }

@@ -95,7 +95,7 @@ class Request implements Interfaces\RequestInterface {
         // Get virtual path
         $virtualPath = str_replace(dirname($_SERVER['SCRIPT_NAME']), '', $_SERVER['REQUEST_URI']);
         
-        if ($virtualPath{0} == '/') {
+        if ($virtualPath[0] == '/') {
             $virtualPath = substr($virtualPath, 1);
         }
                        
