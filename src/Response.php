@@ -26,15 +26,20 @@ class Response
             header($header['name'] . ':' . $header['value']);
         }
 
-        die($this->getBody()->getContents());
+        $body = $this->getBody();
+
+        if (is_string($body)) {
+            die($body);
+        }
+
+        die($body->getContents());
     }
-
-
 
     /**
      * 
      */
-    public function getBody ( ) {
+    public function getBody ( ): string
+    {
 
         return $this->body;
     }
@@ -63,15 +68,7 @@ class Response
 
         return $this->headers;
     }
-    
-    
-    /**
-     * 
-     */
-    public function getProtocolVersion ( ) {
-                
-    }
-    
+
     
     /**
      * 
@@ -108,9 +105,9 @@ class Response
     /**
      * 
      */
-    public function withBody ( \Psr\Http\Message\StreamInterface $body ) {
+    public function setBody ( string $body ) {
 
-        $this->body = $body;
+        $this->body = trim($body);
     }
     
     
@@ -125,14 +122,6 @@ class Response
         ];
 
         return $this;
-    }
-    
-    
-    /**
-     * 
-     */
-    public function withProtocolVersion ( $version ) {
-        
     }
     
     
