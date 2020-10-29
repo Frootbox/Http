@@ -30,9 +30,34 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     /**
      *
      */
-    public function getWithDefault ( $attribute, $default )
+    public function getPath(string $path)
     {
+        $request = explode('.', $path);
 
+        $data = $this->data;
+
+        foreach ($request as $segment) {
+
+            if (!isset($data[$segment]) or $data[$segment] === null) {
+                return null;
+            }
+
+            if (is_array($data[$segment])) {
+                $data = $data[$segment];
+                continue;
+            }
+
+            return $data[$segment];
+        }
+
+        return $data;
+    }
+
+    /**
+     *
+     */
+    public function getWithDefault($attribute, $default)
+    {
         // Return default if attribute does not exist
         if (empty($this->data[$attribute])) {
             return $default;
@@ -63,7 +88,7 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
             foreach ($sections as $segment) {
 
                 if (empty($data[$segment])) {
-                    throw new \Frootbox\Exceptions\InputMissing('Parameter "' . get_class($this). '->' . $attribute . '" is missing.');
+                    throw new \Frootbox\Exceptions\InputMissing(null, [ 'T:' . $segment ]);
                 }
 
                 $data = $data[$segment];
@@ -94,7 +119,7 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
                     return $this;
                 }
 
-                $data = $data[$segment];
+                continue;
             }
         }
 
