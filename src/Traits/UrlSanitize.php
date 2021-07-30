@@ -5,13 +5,16 @@
 
 namespace Frootbox\Http\Traits;
 
-trait UrlSanitize {
-
+trait UrlSanitize
+{
     /**
      *
      */
     public function getStringUrlSanitized ( string $string = null ): string
     {
+        $string = strip_tags($string);
+        $string = str_replace('---', '', $string);
+
         if (empty($string)) {
             return (string) null;
         }
@@ -19,17 +22,17 @@ trait UrlSanitize {
         $string = mb_strtolower($string);
 
         $tr = [
-            '[br]'	=>	'-',
-            '?'		=>	'',
-            '#'		=>	'',
+            '[br]' => '-',
+            '?' => '',
+            '#' => '',
 
-            ' & '	=>	' und ',
-            '–'		=>	' bis ',
+            ' & ' => ' und ',
+            '–' => ' bis ',
 
-            'ä'		=>	'ae',
-            'ü'		=>	'ue',
-            'ö'		=>	'oe',
-            'ß'		=>	'ss',
+            'ä' => 'ae',
+            'ü' => 'ue',
+            'ö' => 'oe',
+            'ß' => 'ss',
         ];
 
         $string = strtr($string, $tr);
@@ -93,28 +96,27 @@ trait UrlSanitize {
             'Я'	=>	'Ja',
             'я'	=>	'ja',
             'е'	=>	'e',
-            'о'	=>	'o'
-
+            'о'	=>	'o',
         );
 
-        $string	=	strtolower(strtr($string, $tr));
+        $string = strtolower(strtr($string, $tr));
 
-        $string	=	preg_replace('#\s#', '-', $string);
-        $string	=	preg_replace('#[^a-z0-9\-]#', '', $string);
+        $string = preg_replace('#\s#', '-', $string);
+        $string = preg_replace('#[^a-z0-9\-]#', '', $string);
 
 
-        $string	=	preg_replace('#[\-]{2,}#i', '-', $string);
+        $string = preg_replace('#[\-]{2,}#i', '-', $string);
 
         if (empty($string)) {
             return (string) null;
         }
 
         if ($string[0] == '-') {
-            $string	=	substr($string, 1);
+            $string = substr($string, 1);
         }
 
         if (substr($string, -1) == '-') {
-            $string	=	substr($string, 0, -1);
+            $string = substr($string, 0, -1);
         }
 
         return $string;
