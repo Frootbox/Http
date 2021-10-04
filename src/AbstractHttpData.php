@@ -77,6 +77,14 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     /**
      *
      */
+    public function hasAttribute(string $attribute): bool
+    {
+        return array_key_exists($attribute, $this->data);
+    }
+
+    /**
+     *
+     */
     public function require(array $attributes): AbstractHttpData
     {
         foreach ($attributes as $attribute) {
