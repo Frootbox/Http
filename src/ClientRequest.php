@@ -13,15 +13,23 @@ class ClientRequest
     /**
      *
      */
-    public function getRequestTarget ( ): string
+    public function getRequestTarget(): string
     {
         return $this->requestTarget;
     }
 
     /**
+     * 
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
+
+    /**
      *
      */
-    public function setQueryParameters ( array $parameters ): ClientRequest
+    public function setQueryParameters(array $parameters): ClientRequest
     {
         $this->parameters = $parameters;
 
@@ -31,7 +39,7 @@ class ClientRequest
     /**
      *
      */
-    public function setRequestTarget ( $requestTarget ): ClientRequest
+    public function setRequestTarget($requestTarget): ClientRequest
     {
         $this->requestTarget = $requestTarget;
 
