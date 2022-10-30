@@ -20,6 +20,7 @@ trait UrlSanitize
         }
 
         $string = mb_strtolower($string);
+        $string = html_entity_decode($string);
 
         $tr = [
             '[br]' => '-',
@@ -119,6 +120,6 @@ trait UrlSanitize
             $string = substr($string, 0, -1);
         }
 
-        return $string;
+        return trim($string);
     }
 }
