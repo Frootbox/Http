@@ -1,16 +1,19 @@
 <?php
 /**
- *
+ * @author Jan Habbo Brüning <jan.habbo.bruening@gmail.com>
  */
 
 namespace Frootbox\Http;
 
 abstract class AbstractHttpData implements Interfaces\HttpDataInterface
 {
-    protected $data;
+    protected array $data;
 
     /**
      * Get value of post/get/xxx variable
+     *
+     * @param $attribute
+     * @return mixed|string|null
      */
     public function get($attribute)
     {
@@ -28,7 +31,19 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
+     * Get value as boolean
      *
+     * @param string $attribute
+     * @return bool
+     */
+    public function getBoolean(string $attribute): bool
+    {
+        return !empty($this->get($attribute));
+    }
+
+    /**
+     * @param string $path
+     * @return array|mixed|null
      */
     public function getPath(string $path)
     {
@@ -54,9 +69,11 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     *
+     * @param $attribute
+     * @param $default
+     * @return mixed|string|null
      */
-    public function getWithDefault($attribute, $default)
+    public function getWithDefault($attribute, $default = null): mixed
     {
         // Return default if attribute does not exist
         if (empty($this->data[$attribute])) {
@@ -67,7 +84,7 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     *
+     * @return array
      */
     public function getData(): array
     {
@@ -75,7 +92,8 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     *
+     * @param string $attribute
+     * @return bool
      */
     public function hasAttribute(string $attribute): bool
     {
@@ -83,7 +101,9 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     *
+     * @param array $attributes
+     * @return $this
+     * @throws \Frootbox\Exceptions\InputMissing
      */
     public function require(array $attributes): AbstractHttpData
     {
@@ -106,9 +126,10 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
         return $this;
     }
 
-
     /**
-     *
+     * @param array $attributes
+     * @return $this
+     * @throws \Frootbox\Exceptions\InputMissing
      */
     public function requireOne(
         array $attributes
