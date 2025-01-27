@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * @author Jan Habbo Brüning <jan.habbo.bruening@gmail.com>
  */
 
 namespace Frootbox\Http\Traits;
@@ -8,10 +8,20 @@ namespace Frootbox\Http\Traits;
 trait UrlSanitize
 {
     /**
-     *
+     * @param string|null $string
+     * @param string|null $language
+     * @return string|null
      */
-    public function getStringUrlSanitized ( string $string = null ): string
+    public function getStringUrlSanitized(string $string = null, string $language = null): ?string
     {
+        if ($string == null) {
+            return null;
+        }
+
+        if ($language == null) {
+            $language = 'de-DE';
+        }
+
         $string = strip_tags($string);
         $string = str_replace('---', '', $string);
 
@@ -22,12 +32,19 @@ trait UrlSanitize
         $string = mb_strtolower($string);
         $string = html_entity_decode($string);
 
+        $ands = [
+            'de-DE' => 'und',
+            'nl-NL' => 'en',
+        ];
+
+        $and = !empty($ands[$language]) ? $ands[$language] : 'und';
+
         $tr = [
             '[br]' => '-',
             '?' => '',
             '#' => '',
 
-            ' & ' => ' und ',
+            ' & ' => ' ' . $and . ' ',
             '–' => ' bis ',
 
             'ä' => 'ae',
@@ -37,7 +54,6 @@ trait UrlSanitize
         ];
 
         $string = strtr($string, $tr);
-
 
         // Transcriptions
         $tr = array(
