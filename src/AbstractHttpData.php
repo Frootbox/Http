@@ -1,6 +1,9 @@
 <?php
 /**
  * @author Jan Habbo Brüning <jan.habbo.bruening@gmail.com>
+ *
+ * @noinspection PhpUnnecessaryLocalVariableInspection
+ * @noinspection PhpFullyQualifiedNameUsageInspection
  */
 
 namespace Frootbox\Http;
@@ -28,6 +31,19 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
         }
 
         return $this->data[$attribute];
+    }
+
+    /**
+     * Returns 1 oder 0 if result is boolean true or false
+     *
+     * This is a helper function to simplify storing booleans in sql via TINYINT(1)
+     *
+     * @param string $attribute
+     * @return int
+     */
+    public function getBinary(string $attribute): int
+    {
+        return $this->getBoolean($attribute) ? 1 : 0;
     }
 
     /**
