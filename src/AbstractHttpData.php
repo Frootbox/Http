@@ -58,6 +58,21 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
+     * @param int $attribute
+     * @param int|null $default
+     * @return int|null
+     */
+    public function getIntWithDefault(string $attribute, ?int $default = null): ?int
+    {
+        // Return default if attribute does not exist
+        if (!array_key_exists($attribute, $this->data)) {
+            return $default;
+        }
+
+        return $this->get($attribute);
+    }
+
+    /**
      * @param string $path
      * @return array|mixed|null
      */
@@ -92,7 +107,7 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     public function getWithDefault($attribute, $default = null): mixed
     {
         // Return default if attribute does not exist
-        if (empty($this->data[$attribute])) {
+        if (!array_key_exists($attribute, $this->data)) {
             return $default;
         }
 
