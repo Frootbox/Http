@@ -14,8 +14,17 @@
     "autoload": {
     	"psr-4": { "Frootbox\\Http\\": "src/" }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Frootbox\\Http\\Tests\\": "tests/"
+        }
+    },
     "require": {
         "frootbox/exceptions": "^0.0.6",
-        "php": ">=8.2"
+        "php": ">=8.2",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11"
     }
 }

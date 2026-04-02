@@ -58,7 +58,7 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     * @param int $attribute
+     * @param string $attribute
      * @param int|null $default
      * @return int|null
      */
@@ -69,7 +69,17 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
             return $default;
         }
 
-        return $this->get($attribute);
+        $value = $this->get($attribute);
+
+        if ($value === null || $value === '') {
+            return $default;
+        }
+
+        if (filter_var($value, FILTER_VALIDATE_INT) === false) {
+            return $default;
+        }
+
+        return (int) $value;
     }
 
     /**
@@ -146,7 +156,7 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
 
             foreach ($sections as $segment) {
 
-                if (empty($data[$segment])) {
+                if (!array_key_exists($segment, $data) || (!is_array($data) && strlen($data[$segment]) === 0)) {
                     throw new \Frootbox\Exceptions\InputMissing(null, [ 'T:' . $segment ]);
                 }
 
@@ -166,20 +176,23 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
         array $attributes
     ): AbstractHttpData
     {
-
         foreach ($attributes as $attribute) {
-
             $sections = explode('.', $attribute);
-
             $data = $this->data;
+            $pathExists = true;
 
             foreach ($sections as $segment) {
 
-                if (!empty($data[$segment])) {
-                    return $this;
+                if (!is_array($data) || !array_key_exists($segment, $data)) {
+                    $pathExists = false;
+                    break;
                 }
 
-                continue;
+                $data = $data[$segment];
+            }
+
+            if ($pathExists && ((is_array($data) && !empty($data)) || (!is_array($data) && strlen($data) > 0))) {
+                return $this;
             }
         }
 

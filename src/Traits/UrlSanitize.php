@@ -14,11 +14,11 @@ trait UrlSanitize
      */
     public function getStringUrlSanitized(string $string = null, string $language = null): ?string
     {
-        if ($string == null) {
+        if ($string === null) {
             return null;
         }
 
-        if ($language == null) {
+        if ($language === null) {
             $language = 'de-DE';
         }
 
@@ -26,7 +26,7 @@ trait UrlSanitize
         $string = str_replace('---', '', $string);
 
         if (empty($string)) {
-            return (string) null;
+            return null;
         }
 
         $string = mb_strtolower($string);
@@ -124,18 +124,24 @@ trait UrlSanitize
 
         $string = preg_replace('#[\-]{2,}#i', '-', $string);
 
-        if (empty($string)) {
-            return (string) null;
+        if (strlen($string) == 0) {
+            return null;
         }
 
         if ($string[0] == '-') {
             $string = substr($string, 1);
         }
 
-        if (substr($string, -1) == '-') {
+        if (str_ends_with($string, '-')) {
             $string = substr($string, 0, -1);
         }
 
-        return trim($string);
+        $string = trim($string);
+
+        if (strlen($string) == 0) {
+            return null;
+        }
+
+        return $string;
     }
 }
