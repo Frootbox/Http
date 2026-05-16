@@ -1,16 +1,14 @@
 <?php
-/**
- * @author Jan Habbo Brüning <jan.habbo.bruening@gmail.com>
- */
 
 namespace Frootbox\Http\Traits;
 
+/**
+ * Builds URL-safe slugs from human-readable strings.
+ */
 trait UrlSanitize
 {
     /**
-     * @param string|null $string
-     * @param string|null $language
-     * @return string|null
+     * Returns a lowercase URL-safe string or null when no usable characters remain.
      */
     public function getStringUrlSanitized(string $string = null, string $language = null): ?string
     {

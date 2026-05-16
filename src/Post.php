@@ -1,13 +1,10 @@
 <?php
-/**
- * @author Jan Habbo Brüning <jan.habbo.bruening@gmail.com>
- *
- * @noinspection PhpUnnecessaryLocalVariableInspection
- * @noinspection PhpFullyQualifiedNameUsageInspection
- */
 
 namespace Frootbox\Http;
 
+/**
+ * Accessor for POST data.
+ */
 class Post extends AbstractHttpData
 {
     public function __construct(array $post = null)

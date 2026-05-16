@@ -1,22 +1,23 @@
 <?php
-/**
- * @author Jan Habbo Brüning <jan.habbo.bruening@gmail.com>
- *
- * @noinspection PhpUnnecessaryLocalVariableInspection
- * @noinspection PhpFullyQualifiedNameUsageInspection
- */
 
 namespace Frootbox\Http;
 
+use Frootbox\Exceptions\InputMissing;
+
+/**
+ * Base accessor for HTTP input data.
+ */
 abstract class AbstractHttpData implements Interfaces\HttpDataInterface
 {
+    /**
+     * @var array<string, mixed>
+     */
     protected array $data;
 
     /**
-     * Get value of post/get/xxx variable
+     * Returns a request value, trimming strings and returning null for missing keys.
      *
-     * @param $attribute
-     * @return mixed|string|null
+     * @param string|int $attribute
      */
     public function get($attribute)
     {
@@ -34,12 +35,7 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     * Returns 1 oder 0 if result is boolean true or false
-     *
-     * This is a helper function to simplify storing booleans in sql via TINYINT(1)
-     *
-     * @param string $attribute
-     * @return int
+     * Returns a boolean-like value as 1 or 0 for database fields such as TINYINT(1).
      */
     public function getBinary(string $attribute): int
     {
@@ -47,10 +43,7 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     * Get value as boolean
-     *
-     * @param string $attribute
-     * @return bool
+     * Returns whether the trimmed value is not empty.
      */
     public function getBoolean(string $attribute): bool
     {
@@ -58,9 +51,7 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     * @param string $attribute
-     * @param int|null $default
-     * @return int|null
+     * Returns an integer value or the given default when the value is missing or invalid.
      */
     public function getIntWithDefault(string $attribute, ?int $default = null): ?int
     {
@@ -83,8 +74,7 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     * @param string $path
-     * @return array|mixed|null
+     * Reads a nested value by dot-separated path.
      */
     public function getPath(string $path)
     {
@@ -110,9 +100,10 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     * @param $attribute
-     * @param $default
-     * @return mixed|string|null
+     * Returns a value or the default when the key is missing.
+     *
+     * @param string|int $attribute
+     * @param mixed $default
      */
     public function getWithDefault($attribute, $default = null): mixed
     {
@@ -125,7 +116,9 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     * @return array
+     * Returns the raw data array.
+     *
+     * @return array<string, mixed>
      */
     public function getData(): array
     {
@@ -133,8 +126,7 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     * @param string $attribute
-     * @return bool
+     * Returns whether the key exists, including keys with null values.
      */
     public function hasAttribute(string $attribute): bool
     {
@@ -142,9 +134,10 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     * @param array $attributes
      * @return $this
-     * @throws \Frootbox\Exceptions\InputMissing
+     *
+     * @param list<string> $attributes Dot-separated paths that must exist.
+     * @throws InputMissing
      */
     public function require(array $attributes): AbstractHttpData
     {
@@ -157,7 +150,7 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
             foreach ($sections as $segment) {
 
                 if (!array_key_exists($segment, $data) || (!is_array($data) && strlen($data[$segment]) === 0)) {
-                    throw new \Frootbox\Exceptions\InputMissing(null, [ 'T:' . $segment ]);
+                    throw new InputMissing(null, [ 'T:' . $segment ]);
                 }
 
                 $data = $data[$segment];
@@ -168,9 +161,10 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
     }
 
     /**
-     * @param array $attributes
      * @return $this
-     * @throws \Frootbox\Exceptions\InputMissing
+     *
+     * @param list<string> $attributes Dot-separated paths where at least one must be present.
+     * @throws InputMissing
      */
     public function requireOne(
         array $attributes
@@ -196,11 +190,12 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
             }
         }
 
-        throw new \Frootbox\Exceptions\InputMissing('Parameter "' . get_class($this). '->' . $attribute . '" is missing.');
+        throw new InputMissing('Parameter "' . get_class($this). '->' . $attribute . '" is missing.');
     }
 
     /**
-     * @deprecated
+     * @param list<string> $attributes
+     * @deprecated Use require() instead.
      * @see \Frootbox\Http\AbstractHttpData::require()
      */
     public function validate( array $attributes): AbstractHttpData

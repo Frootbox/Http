@@ -1,17 +1,24 @@
 <?php
-/**
- *
- */
 
 namespace Frootbox\Http;
 
+/**
+ * Mutable value object for outbound client request data.
+ */
 class ClientRequest
 {
+    /**
+     * @var string|null
+     */
     protected $requestTarget;
+
+    /**
+     * @var array<string, mixed>
+     */
     protected $parameters = [ ];
 
     /**
-     *
+     * Returns the request target path or URI.
      */
     public function getRequestTarget(): string
     {
@@ -19,7 +26,9 @@ class ClientRequest
     }
 
     /**
-     * 
+     * Returns the configured query parameters.
+     *
+     * @return array<string, mixed>
      */
     public function getParameters(): array
     {
@@ -27,7 +36,9 @@ class ClientRequest
     }
 
     /**
+     * Replaces the query parameters.
      *
+     * @param array<string, mixed> $parameters
      */
     public function setQueryParameters(array $parameters): ClientRequest
     {
@@ -37,7 +48,7 @@ class ClientRequest
     }
 
     /**
-     *
+     * Sets the request target path or URI.
      */
     public function setRequestTarget($requestTarget): ClientRequest
     {
