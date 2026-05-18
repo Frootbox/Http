@@ -112,7 +112,13 @@ abstract class AbstractHttpData implements Interfaces\HttpDataInterface
             return $default;
         }
 
-        return $this->get($attribute);
+        $value = $this->get($attribute);
+
+        if (strlen($value) === 0) {
+            $value = null;
+        }
+
+        return $value;
     }
 
     /**
